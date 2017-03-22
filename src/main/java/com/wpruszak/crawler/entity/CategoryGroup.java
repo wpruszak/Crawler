@@ -7,9 +7,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
@@ -18,7 +18,10 @@ import java.util.TreeSet;
  * {@author Wojciech Pruszak} <info@wpruszak.com> on 21.03.17.
  */
 @Entity
-@Table(name = "categoryGroup", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
+@Table(
+    name = "categoryGroup",
+    indexes = {@Index(name = "categoryGroupIdxName", columnList = "name")}
+)
 public class CategoryGroup implements Serializable {
 
     private static final long serialVersionUID = 7386971189809228793L;
@@ -27,14 +30,15 @@ public class CategoryGroup implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "name", length = 200, nullable = false)
+    @Column(name = "name", length = 200, unique = true, nullable = false)
     private String name;
 
     @OneToMany(
         mappedBy = "categoryGroup",
         fetch = FetchType.LAZY,
         orphanRemoval = true,
-        cascade = {CascadeType.ALL}
+        cascade = {CascadeType.ALL},
+        targetEntity = Category.class
     )
     private Set<Category> categories;
 
@@ -65,7 +69,9 @@ public class CategoryGroup implements Serializable {
     }
 
     public void removeCategory(final Category category) {
-        this.categories.remove(category);
+        if (this.categories.contains(category)) {
+            this.categories.remove(category);
+        }
     }
 
     public void addCategory(final Category category) {
