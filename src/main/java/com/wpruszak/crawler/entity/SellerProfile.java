@@ -19,10 +19,7 @@ import java.util.Set;
 @Entity
 @Table(
     name = "sellerProfile",
-    indexes = {
-        @Index(name = "sellerProfileIdxMerchantId", columnList = "merchantId"),
-        @Index(name = "sellerProfileIdxName", columnList = "name")
-    }
+    indexes = {@Index(name = "sellerProfileIdxMerchantId", columnList = "merchantId")}
 )
 public class SellerProfile implements Serializable {
 

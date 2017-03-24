@@ -2,6 +2,9 @@ package com.wpruszak.crawler.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -12,6 +15,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "sellerProfileToCategory")
 public class SellerProfileToCategory {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "sellerProfileId", nullable = false)
@@ -41,6 +48,10 @@ public class SellerProfileToCategory {
         this.category = category;
         this.commentCount = commentCount;
         this.isTopseller = isTopseller;
+    }
+
+    public long getId() {
+        return this.id;
     }
 
     public SellerProfile getSellerProfile() {
