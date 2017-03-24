@@ -69,9 +69,7 @@ public class CategoryGroup implements Serializable {
     }
 
     public void removeCategory(final Category category) {
-        if (this.categories.contains(category)) {
-            this.categories.remove(category);
-        }
+        this.categories.remove(category);
     }
 
     public void addCategory(final Category category) {

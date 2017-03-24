@@ -1,21 +1,16 @@
 package com.wpruszak.crawler.entity;
 
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -65,24 +60,18 @@ public class SellerProfile implements Serializable {
     @Column(name = "businessType", length = 100)
     private String businessType;
 
+    @Column(name = "isTopseller", nullable = false)
+    private Boolean isTopseller;
+
     @Lob
     @Column(name = "text")
     private String text;
 
-    @ElementCollection
-    private Map<Integer, Integer> commentsInCategory;
-
-    @ManyToMany
-    @JoinTable(
-        name = "sellerProfileToCategory",
-        joinColumns = @JoinColumn(name = "sellerProfileId", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "categoryId", referencedColumnName = "id")
-    )
-    private Set<Category> categories;
+    @OneToMany(mappedBy = "sellerProfile")
+    private Set<SellerProfileToCategory> sellerProfileToCategories;
 
     public SellerProfile() {
-        this.commentsInCategory = new HashMap<>();
-        this.categories = new HashSet<>();
+        this.sellerProfileToCategories = new HashSet<>();
     }
 
     public SellerProfile(
@@ -95,7 +84,9 @@ public class SellerProfile implements Serializable {
         final String address,
         final String tradeRegisterNumber,
         final String businessType,
-        final String text
+        final Boolean isTopseller,
+        final String text,
+        final Set<SellerProfileToCategory> sellerProfileToCategories
     ) {
 
         this();
@@ -108,38 +99,9 @@ public class SellerProfile implements Serializable {
         this.address = address;
         this.tradeRegisterNumber = tradeRegisterNumber;
         this.businessType = businessType;
+        this.isTopseller = isTopseller;
         this.text = text;
-    }
-
-    public SellerProfile(
-        final String name,
-        final String description,
-        final String merchantId,
-        final Integer percentileRating,
-        final Integer ratingCount,
-        final String phoneNumber,
-        final String address,
-        final String tradeRegisterNumber,
-        final String businessType,
-        final String text,
-        final Set<Category> categories,
-        final Map<Integer, Integer> commentsInCategory
-    ) {
-
-        this(
-            name,
-            description,
-            merchantId,
-            percentileRating,
-            ratingCount,
-            phoneNumber,
-            address,
-            tradeRegisterNumber,
-            businessType,
-            text
-        );
-        this.categories = categories;
-        this.commentsInCategory = commentsInCategory;
+        this.sellerProfileToCategories = sellerProfileToCategories;
     }
 
     public long getId() {
@@ -218,14 +180,12 @@ public class SellerProfile implements Serializable {
         this.businessType = businessType;
     }
 
-    public void removeCategory(final Category category) {
-        if (this.categories.contains(category)) {
-            this.categories.remove(category);
-        }
+    public Boolean getTopseller() {
+        return this.isTopseller;
     }
 
-    public void addCategory(final Category category) {
-        this.categories.add(category);
+    public void setTopseller(final Boolean topseller) {
+        this.isTopseller = topseller;
     }
 
     public String getText() {
@@ -236,20 +196,20 @@ public class SellerProfile implements Serializable {
         this.text = text;
     }
 
-    public Set<Category> getCategories() {
-        return this.categories;
+    public void addSellerProfileToCategory(final SellerProfileToCategory sellerProfileToCategory) {
+        this.sellerProfileToCategories.add(sellerProfileToCategory);
     }
 
-    public void setCategories(final Set<Category> categories) {
-        this.categories = categories;
+    public void removeSellerProfileToCategory(final SellerProfileToCategory sellerProfileToCategory) {
+        this.sellerProfileToCategories.remove(sellerProfileToCategory);
     }
 
-    public Map<Integer, Integer> getCommentsInCategory() {
-        return this.commentsInCategory;
+    public Set<SellerProfileToCategory> getSellerProfileToCategories() {
+        return this.sellerProfileToCategories;
     }
 
-    public void setCommentsInCategory(final Map<Integer, Integer> commentsInCategory) {
-        this.commentsInCategory = commentsInCategory;
+    public void setSellerProfileToCategories(final Set<SellerProfileToCategory> sellerProfileToCategories) {
+        this.sellerProfileToCategories = sellerProfileToCategories;
     }
 
     @Override

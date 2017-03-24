@@ -8,10 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -43,10 +44,11 @@ public class Category implements Serializable {
     @JoinColumn(name = "categoryGroupId", nullable = false)
     private CategoryGroup categoryGroup;
 
-    @ManyToMany(mappedBy = "categories")
-    private Set<SellerProfile> sellerProfiles;
+    @OneToMany(mappedBy = "category")
+    private Set<SellerProfileToCategory> sellerProfilesToCategory;
 
     public Category() {
+        this.sellerProfilesToCategory = new HashSet<>();
     }
 
     public Category(final String name, final String nodeId) {
@@ -58,6 +60,16 @@ public class Category implements Serializable {
     public Category(final String name, final String nodeId, final CategoryGroup categoryGroup) {
         this(name, nodeId);
         this.categoryGroup = categoryGroup;
+    }
+
+    public Category(
+        final String name,
+        final String nodeId,
+        final CategoryGroup categoryGroup,
+        final Set<SellerProfileToCategory> sellerProfileToCategories
+    ) {
+        this(name, nodeId, categoryGroup);
+        this.sellerProfilesToCategory = sellerProfileToCategories;
     }
 
     public long getId() {
@@ -88,12 +100,20 @@ public class Category implements Serializable {
         this.categoryGroup = categoryGroup;
     }
 
-    public Set<SellerProfile> getSellerProfiles() {
-        return this.sellerProfiles;
+    public void addSellerProfileToCategory(final SellerProfileToCategory sellerProfileToCategory) {
+        this.sellerProfilesToCategory.add(sellerProfileToCategory);
     }
 
-    public void setSellerProfiles(final Set<SellerProfile> sellerProfiles) {
-        this.sellerProfiles = sellerProfiles;
+    public void removeSellerProfileToCategory(final SellerProfileToCategory sellerProfileToCategory) {
+        this.sellerProfilesToCategory.remove(sellerProfileToCategory);
+    }
+
+    public Set<SellerProfileToCategory> getSellerProfilesToCategory() {
+        return this.sellerProfilesToCategory;
+    }
+
+    public void setSellerProfilesToCategory(final Set<SellerProfileToCategory> sellerProfilesToCategory) {
+        this.sellerProfilesToCategory = sellerProfilesToCategory;
     }
 
     @Override
@@ -107,18 +127,12 @@ public class Category implements Serializable {
 
         final Category that = (Category) o;
 
-        if (this.id != that.id) {
-            return false;
-        }
-
         return this.nodeId.equals(that.nodeId);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (this.id ^ (this.id >>> 32));
-        result = 31 * result + this.nodeId.hashCode();
-        return result;
+        return this.nodeId.hashCode();
     }
 
     @Override
