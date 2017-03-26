@@ -1,4 +1,4 @@
-package com.wpruszak.crawler.entity;
+package com.wpruszak.crawler.model.primary.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +21,7 @@ public class Page implements Serializable {
     private static final long serialVersionUID = 6331648816241050063L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "url", nullable = false, length = 10000)

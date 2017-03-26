@@ -1,4 +1,4 @@
-package com.wpruszak.crawler.entity;
+package com.wpruszak.crawler.model.primary.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class SellerProfileToCategory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne(optional = false)

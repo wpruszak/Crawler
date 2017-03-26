@@ -1,4 +1,4 @@
-package com.wpruszak.crawler.entity;
+package com.wpruszak.crawler.model.primary.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,7 +27,7 @@ public class CategoryGroup implements Serializable {
     private static final long serialVersionUID = 7386971189809228793L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "name", length = 200, unique = true, nullable = false)

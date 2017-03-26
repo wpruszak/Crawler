@@ -1,6 +1,6 @@
-package com.wpruszak.crawler.repository;
+package com.wpruszak.crawler.model.primary.repository;
 
-import com.wpruszak.crawler.entity.SellerProfileToCategory;
+import com.wpruszak.crawler.model.primary.entity.SellerProfileToCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

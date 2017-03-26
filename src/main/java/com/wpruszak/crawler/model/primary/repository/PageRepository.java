@@ -1,6 +1,6 @@
-package com.wpruszak.crawler.repository;
+package com.wpruszak.crawler.model.primary.repository;
 
-import com.wpruszak.crawler.entity.Page;
+import com.wpruszak.crawler.model.primary.entity.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

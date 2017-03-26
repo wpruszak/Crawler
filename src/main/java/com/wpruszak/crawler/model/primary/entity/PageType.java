@@ -1,4 +1,4 @@
-package com.wpruszak.crawler.entity;
+package com.wpruszak.crawler.model.primary.entity;
 
 /**
  * {@author Wojciech Pruszak} <info@wpruszak.com> on 22.03.17.
