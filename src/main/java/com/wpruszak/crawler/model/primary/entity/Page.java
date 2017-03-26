@@ -1,5 +1,7 @@
 package com.wpruszak.crawler.model.primary.entity;
 
+import com.wpruszak.crawler.model.shared.PageType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

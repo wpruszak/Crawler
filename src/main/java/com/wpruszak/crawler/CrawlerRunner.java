@@ -1,16 +1,10 @@
 package com.wpruszak.crawler;
 
-import com.wpruszak.crawler.manager.ExecutionManager;
-import com.wpruszak.crawler.model.primary.entity.Page;
-import com.wpruszak.crawler.model.primary.entity.PageType;
-import com.wpruszak.crawler.model.primary.repository.PageRepository;
+import com.wpruszak.crawler.net.fetcher.Fetcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -23,38 +17,16 @@ public class CrawlerRunner implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(CrawlerRunner.class);
 
-    private ExecutionManager executionManager;
-
-    private StringRedisTemplate redisTemplate;
-
-    private PageRepository pageRepository;
+    private Fetcher fetcher;
 
     @Autowired
-    public CrawlerRunner(
-        ExecutionManager executionManager,
-        @Qualifier("redisStringTemplate") StringRedisTemplate redisTemplate,
-        PageRepository pageRepository
-    ) {
-        this.executionManager = executionManager;
-        this.redisTemplate = redisTemplate;
-        this.pageRepository = pageRepository;
+    public CrawlerRunner(Fetcher fetcher) {
+        this.fetcher = fetcher;
     }
 
     public void run(String... args) throws Exception {
 
-        ValueOperations<String, String> ops = this.redisTemplate.opsForValue();
-        String key = "test";
-        System.out.println(this.redisTemplate.hasKey("test"));
-        if (!this.redisTemplate.hasKey(key)) {
-            ops.set(key, "test");
-        }
-        System.out.println(key + " : " + ops.get(key));
-
-        Page page = new Page();
-        page.setHtml("test");
-        page.setType(PageType.CATEGORY);
-        page.setUrl("test");
-        this.pageRepository.saveAndFlush(page);
+        this.fetcher.fetchPage("http://www.whoishostingthis.com/tools/user-agent/?test=test&test2=test2");
 
         logger.info(String.format(
             "%s %s with arguments: %s",
