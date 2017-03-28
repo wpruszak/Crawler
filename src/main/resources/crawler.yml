@@ -1,0 +1,4 @@
+# Threading
+crawler:
+    threads:
+        max: 10

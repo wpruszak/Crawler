@@ -1,0 +1,31 @@
+spring:
+
+    redis:
+        host: localhost
+        password: root
+        port: 6379
+
+    data:
+        jpa:
+            repositories:
+                enabled: false
+        redis:
+            repositories:
+                enabled: false
+
+    datasource:
+        url: 'jdbc:mysql://localhost:3306/crawler'
+        username: root
+        password: dev1
+        driver-class-name: com.mysql.jdbc.Driver
+
+    jpa:
+        hibernate:
+            ddl-auto: update
+            naming:
+                strategy: org.hibernate.cfg.ImprovedNamingStrategy
+#                implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+#                physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+logging:
+    path: ./log

@@ -7,6 +7,6 @@ import org.springframework.context.annotation.PropertySource;
  * {@author Wojciech Pruszak} <info@wpruszak.com> on 24.03.17.
  */
 @Configuration
-@PropertySource("classpath:crawler.properties")
+@PropertySource("classpath:crawler.yml")
 public class CrawlerConfiguration {
 }
