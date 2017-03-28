@@ -4,7 +4,9 @@ package com.wpruszak.crawler.net.http;
  * {@author Wojciech Pruszak} <info@wpruszak.com> on 26.03.17.
  */
 public enum Protocol {
-    HTTP(0), HTTPS(1);
+
+    HTTP(0),
+    HTTPS(1);
 
     private final int id;
 
