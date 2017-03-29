@@ -1,3 +1,6 @@
+# Keys / urls
+secret.yml
+
 # Intellij
 .idea
 *.iml
