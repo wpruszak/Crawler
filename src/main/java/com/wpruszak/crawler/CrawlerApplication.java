@@ -1,11 +1,13 @@
 package com.wpruszak.crawler;
 
+import com.wpruszak.crawler.configuration.CrawlerApplicationContextInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 /**
  * {@author Wojciech Pruszak} <info@wpruszak.com> on 21.03.17.
@@ -18,7 +20,10 @@ public class CrawlerApplication {
 
     public static void main(String[] args) {
 
-        SpringApplication.run(CrawlerApplication.class, args);
-        logger.info("Stopping application...");
+        CrawlerApplication.logger.info("Starting application...");
+        new SpringApplicationBuilder(CrawlerApplication.class)
+            .initializers(new CrawlerApplicationContextInitializer())
+            .run(args);
+        CrawlerApplication.logger.info("Stopping application...");
     }
 }
