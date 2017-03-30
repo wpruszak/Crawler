@@ -90,8 +90,8 @@ public class CrawlerApplicationContextInitializer
                 this.recursiveFlatten((Map<Object, Object>) entry.getValue(), keyStack, result);
             } else {
                 result.put(keyStack.stream().collect(Collectors.joining(".")), entry.getValue());
-                keyStack.remove(keyStack.size() - 1);
             }
+            keyStack.remove(keyStack.size() - 1);
         }
 
         return result;
