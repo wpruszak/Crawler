@@ -1,5 +1,7 @@
 package com.wpruszak.crawler.model.primary.entity;
 
+import com.wpruszak.crawler.util.Copyable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,7 +28,7 @@ import java.util.Set;
         @Index(name = "categoryIdxCategoryGroupId", columnList = "categoryGroupId")
     }
 )
-public class Category implements Serializable {
+public class Category implements Serializable, Copyable<Category> {
 
     private static final long serialVersionUID = 5126072244138756276L;
 
@@ -66,10 +68,18 @@ public class Category implements Serializable {
         final String name,
         final String nodeId,
         final CategoryGroup categoryGroup,
-        final Set<SellerProfileToCategory> sellerProfileToCategories
-    ) {
+        final Set<SellerProfileToCategory> sellerProfileToCategories) {
+
         this(name, nodeId, categoryGroup);
         this.sellerProfilesToCategory = sellerProfileToCategories;
+    }
+
+    @Override
+    public void copyFrom(final Category entityToCopyFrom) {
+        this.nodeId = entityToCopyFrom.getNodeId();
+        this.name = entityToCopyFrom.getName();
+        this.categoryGroup = entityToCopyFrom.getCategoryGroup();
+        this.sellerProfilesToCategory = entityToCopyFrom.getSellerProfilesToCategory();
     }
 
     public long getId() {

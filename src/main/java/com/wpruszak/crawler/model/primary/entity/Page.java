@@ -1,6 +1,7 @@
 package com.wpruszak.crawler.model.primary.entity;
 
 import com.wpruszak.crawler.model.shared.PageType;
+import com.wpruszak.crawler.util.Copyable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "page")
-public class Page implements Serializable {
+public class Page implements Serializable, Copyable<Page> {
 
     private static final long serialVersionUID = 6331648816241050063L;
 
@@ -44,6 +45,13 @@ public class Page implements Serializable {
         this.url = url;
         this.html = html;
         this.type = type;
+    }
+
+    @Override
+    public void copyFrom(final Page entityToCopyFrom) {
+        this.url = entityToCopyFrom.getUrl();
+        this.type = entityToCopyFrom.getType();
+        this.html = entityToCopyFrom.getHtml();
     }
 
     public long getId() {

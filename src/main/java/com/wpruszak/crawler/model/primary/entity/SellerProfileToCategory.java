@@ -1,5 +1,7 @@
 package com.wpruszak.crawler.model.primary.entity;
 
+import com.wpruszak.crawler.util.Copyable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,13 +10,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * {@author Wojciech Pruszak} <info@wpruszak.com> on 22.03.17.
  */
 @Entity
 @Table(name = "sellerProfileToCategory")
-public class SellerProfileToCategory {
+public class SellerProfileToCategory implements Serializable, Copyable<SellerProfileToCategory> {
+
+    private static final long serialVersionUID = 7798850204447996907L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,13 +46,20 @@ public class SellerProfileToCategory {
         final SellerProfile sellerProfile,
         final Category category,
         final Integer commentCount,
-        final Boolean isTopseller
-    ) {
+        final Boolean isTopseller) {
         this();
         this.sellerProfile = sellerProfile;
         this.category = category;
         this.commentCount = commentCount;
         this.isTopseller = isTopseller;
+    }
+
+    @Override
+    public void copyFrom(final SellerProfileToCategory entityToCopyFrom) {
+        this.sellerProfile = entityToCopyFrom.getSellerProfile();
+        this.category = entityToCopyFrom.getCategory();
+        this.commentCount = entityToCopyFrom.getCommentCount();
+        this.isTopseller = entityToCopyFrom.getIsTopseller();
     }
 
     public long getId() {
@@ -78,7 +90,15 @@ public class SellerProfileToCategory {
         this.commentCount = commentCount;
     }
 
+    public Boolean isTopseller() {
+        return this.getIsTopseller();
+    }
+
     public Boolean getTopseller() {
+        return this.getIsTopseller();
+    }
+
+    public Boolean getIsTopseller() {
         return this.isTopseller;
     }
 

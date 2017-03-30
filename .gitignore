@@ -21,3 +21,6 @@ buildNumber.properties
 # H2
 *.mv.db
 *.trace.db
+
+# Spring
+out/

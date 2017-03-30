@@ -1,5 +1,7 @@
 package com.wpruszak.crawler.model.primary.entity;
 
+import com.wpruszak.crawler.util.Copyable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +23,7 @@ import java.util.Set;
     name = "sellerProfile",
     indexes = {@Index(name = "sellerProfileIdxMerchantId", columnList = "merchantId")}
 )
-public class SellerProfile implements Serializable {
+public class SellerProfile implements Serializable, Copyable<SellerProfile> {
 
     private static final long serialVersionUID = -7102780515877439093L;
 
@@ -83,8 +85,7 @@ public class SellerProfile implements Serializable {
         final String businessType,
         final Boolean isTopseller,
         final String text,
-        final Set<SellerProfileToCategory> sellerProfileToCategories
-    ) {
+        final Set<SellerProfileToCategory> sellerProfileToCategories) {
 
         this();
         this.name = name;
@@ -99,6 +100,22 @@ public class SellerProfile implements Serializable {
         this.isTopseller = isTopseller;
         this.text = text;
         this.sellerProfileToCategories = sellerProfileToCategories;
+    }
+
+    @Override
+    public void copyFrom(final SellerProfile entityToCopyFrom) {
+        this.name = entityToCopyFrom.getName();
+        this.description = entityToCopyFrom.getDescription();
+        this.merchantId = entityToCopyFrom.getMerchantId();
+        this.percentileRating = entityToCopyFrom.getPercentileRating();
+        this.ratingCount = entityToCopyFrom.getRatingCount();
+        this.phoneNumber = entityToCopyFrom.getPhoneNumber();
+        this.address = entityToCopyFrom.getAddress();
+        this.tradeRegisterNumber = entityToCopyFrom.getTradeRegisterNumber();
+        this.businessType = entityToCopyFrom.getBusinessType();
+        this.isTopseller = entityToCopyFrom.getTopseller();
+        this.text = entityToCopyFrom.getText();
+        this.sellerProfileToCategories = entityToCopyFrom.getSellerProfileToCategories();
     }
 
     public long getId() {
