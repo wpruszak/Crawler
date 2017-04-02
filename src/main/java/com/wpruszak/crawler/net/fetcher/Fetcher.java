@@ -7,6 +7,9 @@ import java.util.function.Function;
 
 /**
  * {@author Wojciech Pruszak} <info@wpruszak.com> on 28.03.17.
+ *
+ * @param <RQ> Request class.
+ * @param <RS> Response class.
  */
 @FunctionalInterface
 public interface FetcherInterface<RQ extends RequestInterface, RS extends ResponseInterface> {

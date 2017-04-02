@@ -1,15 +1,20 @@
 package com.wpruszak.crawler.extractor;
 
-import com.wpruszak.crawler.util.Copyable;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.util.List;
 
 /**
  * {@author Wojciech Pruszak} <info@wpruszak.com> on 28.03.17.
  */
-public abstract class AbstractExtractor<E extends Copyable<E>> implements ExtractorInterface<E> {
+public abstract class AbstractExtractor<T> implements Extractor<T> {
 
-    protected ExtractingStrategyInterface<E> extractingStrategy;
+    protected Elements toExtract;
 
-    public E extract(String body) {
-        return this.extractingStrategy.extract(body);
-    }
+    public abstract List<T> extract(final String body);
+
+    protected abstract Elements retrieveExtractableElements(String body);
+
+    protected abstract T extractSingleElement(Element element);
 }
