@@ -10,6 +10,10 @@ public enum Protocol {
 
     private final int id;
 
+    private Protocol(final int id) {
+        this.id = id;
+    }
+
     public static Protocol getById(int id) {
         Protocol.values();
         for (Protocol protocol : Protocol.values()) {
@@ -18,10 +22,6 @@ public enum Protocol {
             }
         }
         return null;
-    }
-
-    private Protocol(final int id) {
-        this.id = id;
     }
 
     public int getId() {

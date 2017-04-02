@@ -13,6 +13,10 @@ public enum PageType {
 
     private final int id;
 
+    private PageType(final int id) {
+        this.id = id;
+    }
+
     public static PageType getById(Long id) {
         PageType.values();
         for (PageType pageType : PageType.values()) {
@@ -21,10 +25,6 @@ public enum PageType {
             }
         }
         return null;
-    }
-
-    private PageType(final int id) {
-        this.id = id;
     }
 
     public int getId() {

@@ -54,16 +54,16 @@ public class Page implements Serializable, Copyable<Page> {
         this.html = entityToCopyFrom.getHtml();
     }
 
-    public long getId() {
-        return this.id;
-    }
-
     public String getUrl() {
         return this.url;
     }
 
     public void setUrl(final String url) {
         this.url = url;
+    }
+
+    public PageType getType() {
+        return this.type;
     }
 
     public String getHtml() {
@@ -74,12 +74,17 @@ public class Page implements Serializable, Copyable<Page> {
         this.html = html;
     }
 
-    public PageType getType() {
-        return this.type;
-    }
-
     public void setType(final PageType type) {
         this.type = type;
+    }
+
+    public long getId() {
+        return this.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.url.hashCode();
     }
 
     @Override
@@ -94,11 +99,6 @@ public class Page implements Serializable, Copyable<Page> {
         final Page page = (Page) o;
 
         return this.url.equals(page.url);
-    }
-
-    @Override
-    public int hashCode() {
-        return this.url.hashCode();
     }
 
     @Override

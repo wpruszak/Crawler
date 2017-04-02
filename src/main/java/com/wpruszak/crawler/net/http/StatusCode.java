@@ -89,6 +89,10 @@ public enum StatusCode {
 
     private final int statusCode;
 
+    private StatusCode(final int statusCode) {
+        this.statusCode = statusCode;
+    }
+
     public static StatusCode getByStatusCode(int code) {
         StatusCode.values();
         for (StatusCode statusCode : StatusCode.values()) {
@@ -97,10 +101,6 @@ public enum StatusCode {
             }
         }
         return null;
-    }
-
-    private StatusCode(final int statusCode) {
-        this.statusCode = statusCode;
     }
 
     public int getStatusCode() {

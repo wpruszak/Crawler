@@ -19,6 +19,14 @@ public interface RequestInterface {
             .toString();
     }
 
+    Protocol getProtocol();
+
+    void setProtocol(Protocol protocol);
+
+    String getHost();
+
+    String getPath();
+
     default String getQuery() {
         return this.getParameters()
             .entrySet()
@@ -27,25 +35,17 @@ public interface RequestInterface {
             .collect(Collectors.joining());
     }
 
-    Protocol getProtocol();
+    Map<String, String> getParameters();
 
-    void setProtocol(Protocol protocol);
-
-    String getPath();
+    void setParameters(Map<String, String> parameters);
 
     void setPath(String path);
-
-    String getHost();
 
     void setHost(String host);
 
     Long getEpochSeconds();
 
     void setEpochSeconds(Long epochSeconds);
-
-    Map<String, String> getParameters();
-
-    void setParameters(Map<String, String> parameters);
 
     void addParameter(String key, String value);
 

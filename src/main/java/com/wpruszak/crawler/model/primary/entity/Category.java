@@ -39,7 +39,7 @@ public class Category implements Serializable, Copyable<Category> {
     @Column(name = "name", length = 200, unique = true, nullable = false)
     private String name;
 
-    @Column(name = "nodeId", length = 200, unique = true, nullable = false)
+    @Column(name = "nodeId", length = 200, unique = true)
     private String nodeId;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER, targetEntity = CategoryGroup.class)
@@ -48,21 +48,6 @@ public class Category implements Serializable, Copyable<Category> {
 
     @OneToMany(mappedBy = "category")
     private Set<SellerProfileToCategory> sellerProfilesToCategory;
-
-    public Category() {
-        this.sellerProfilesToCategory = new HashSet<>();
-    }
-
-    public Category(final String name, final String nodeId) {
-        this();
-        this.name = name;
-        this.nodeId = nodeId;
-    }
-
-    public Category(final String name, final String nodeId, final CategoryGroup categoryGroup) {
-        this(name, nodeId);
-        this.categoryGroup = categoryGroup;
-    }
 
     public Category(
         final String name,
@@ -74,6 +59,21 @@ public class Category implements Serializable, Copyable<Category> {
         this.sellerProfilesToCategory = sellerProfileToCategories;
     }
 
+    public Category(final String name, final String nodeId, final CategoryGroup categoryGroup) {
+        this(name, nodeId);
+        this.categoryGroup = categoryGroup;
+    }
+
+    public Category(final String name, final String nodeId) {
+        this();
+        this.name = name;
+        this.nodeId = nodeId;
+    }
+
+    public Category() {
+        this.sellerProfilesToCategory = new HashSet<>();
+    }
+
     @Override
     public void copyFrom(final Category entityToCopyFrom) {
         this.nodeId = entityToCopyFrom.getNodeId();
@@ -82,8 +82,8 @@ public class Category implements Serializable, Copyable<Category> {
         this.sellerProfilesToCategory = entityToCopyFrom.getSellerProfilesToCategory();
     }
 
-    public long getId() {
-        return this.id;
+    public String getNodeId() {
+        return this.nodeId;
     }
 
     public String getName() {
@@ -94,20 +94,28 @@ public class Category implements Serializable, Copyable<Category> {
         this.name = name;
     }
 
-    public String getNodeId() {
-        return this.nodeId;
-    }
-
-    public void setNodeId(final String nodeId) {
-        this.nodeId = nodeId;
-    }
-
     public CategoryGroup getCategoryGroup() {
         return this.categoryGroup;
     }
 
     public void setCategoryGroup(final CategoryGroup categoryGroup) {
         this.categoryGroup = categoryGroup;
+    }
+
+    public Set<SellerProfileToCategory> getSellerProfilesToCategory() {
+        return this.sellerProfilesToCategory;
+    }
+
+    public void setSellerProfilesToCategory(final Set<SellerProfileToCategory> sellerProfilesToCategory) {
+        this.sellerProfilesToCategory = sellerProfilesToCategory;
+    }
+
+    public void setNodeId(final String nodeId) {
+        this.nodeId = nodeId;
+    }
+
+    public long getId() {
+        return this.id;
     }
 
     public void addSellerProfileToCategory(final SellerProfileToCategory sellerProfileToCategory) {
@@ -118,12 +126,11 @@ public class Category implements Serializable, Copyable<Category> {
         this.sellerProfilesToCategory.remove(sellerProfileToCategory);
     }
 
-    public Set<SellerProfileToCategory> getSellerProfilesToCategory() {
-        return this.sellerProfilesToCategory;
-    }
-
-    public void setSellerProfilesToCategory(final Set<SellerProfileToCategory> sellerProfilesToCategory) {
-        this.sellerProfilesToCategory = sellerProfilesToCategory;
+    @Override
+    public int hashCode() {
+        int result = this.name.hashCode();
+        result = 31 * result + (this.nodeId != null ? this.nodeId.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -135,14 +142,12 @@ public class Category implements Serializable, Copyable<Category> {
             return false;
         }
 
-        final Category that = (Category) o;
+        final Category category = (Category) o;
 
-        return this.nodeId.equals(that.nodeId);
-    }
-
-    @Override
-    public int hashCode() {
-        return this.nodeId.hashCode();
+        if (!this.name.equals(category.name)) {
+            return false;
+        }
+        return this.nodeId != null ? this.nodeId.equals(category.nodeId) : category.nodeId == null;
     }
 
     @Override

@@ -11,6 +11,10 @@ public interface ResponseInterface {
         return this.getIsCaptcha();
     }
 
+    Boolean getIsCaptcha();
+
+    void setIsCaptcha(Boolean isCaptcha);
+
     StatusCode getStatusCode();
 
     void setStatusCode(StatusCode statusCode);
@@ -34,10 +38,6 @@ public interface ResponseInterface {
     Integer getRedirectCount();
 
     void setRedirectCount(Integer redirectCount);
-
-    Boolean getIsCaptcha();
-
-    void setIsCaptcha(Boolean isCaptcha);
 
     RequestInterface getRequest();
 

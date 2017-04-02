@@ -12,7 +12,7 @@ import java.util.function.Function;
  * @param <RS> Response class.
  */
 @FunctionalInterface
-public interface FetcherInterface<RQ extends RequestInterface, RS extends ResponseInterface> {
+public interface Fetcher<RQ extends RequestInterface, RS extends ResponseInterface> {
 
     RS execute(final Function<RQ, RS> transformer, final RQ request);
 }

@@ -44,8 +44,9 @@ public class CategoryGroup implements Serializable, Copyable<CategoryGroup> {
     )
     private Set<Category> categories;
 
-    public CategoryGroup() {
-        this.categories = new TreeSet<>();
+    public CategoryGroup(final String name, final Set<Category> categories) {
+        this(name);
+        this.categories = categories;
     }
 
     public CategoryGroup(final String name) {
@@ -53,19 +54,14 @@ public class CategoryGroup implements Serializable, Copyable<CategoryGroup> {
         this.name = name;
     }
 
-    public CategoryGroup(final String name, final Set<Category> categories) {
-        this(name);
-        this.categories = categories;
+    public CategoryGroup() {
+        this.categories = new TreeSet<>();
     }
 
     @Override
     public void copyFrom(final CategoryGroup entityToCopyFrom) {
         this.name = entityToCopyFrom.getName();
         this.categories = entityToCopyFrom.getCategories();
-    }
-
-    public long getId() {
-        return this.id;
     }
 
     public String getName() {
@@ -76,6 +72,18 @@ public class CategoryGroup implements Serializable, Copyable<CategoryGroup> {
         this.name = name;
     }
 
+    public Set<Category> getCategories() {
+        return this.categories;
+    }
+
+    public void setCategories(final Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    public long getId() {
+        return this.id;
+    }
+
     public void removeCategory(final Category category) {
         this.categories.remove(category);
     }
@@ -84,12 +92,11 @@ public class CategoryGroup implements Serializable, Copyable<CategoryGroup> {
         this.categories.add(category);
     }
 
-    public Set<Category> getCategories() {
-        return this.categories;
-    }
-
-    public void setCategories(final Set<Category> categories) {
-        this.categories = categories;
+    @Override
+    public int hashCode() {
+        int result = (int) (this.id ^ (this.id >>> 32));
+        result = 31 * result + this.name.hashCode();
+        return result;
     }
 
     @Override
@@ -110,13 +117,6 @@ public class CategoryGroup implements Serializable, Copyable<CategoryGroup> {
             return false;
         }
         return this.categories.equals(that.categories);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (this.id ^ (this.id >>> 32));
-        result = 31 * result + this.name.hashCode();
-        return result;
     }
 
     @Override

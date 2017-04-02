@@ -39,9 +39,6 @@ public class SellerProfileToCategory implements Serializable, Copyable<SellerPro
     @Column(name = "isTopseller", nullable = false)
     private Boolean isTopseller;
 
-    public SellerProfileToCategory() {
-    }
-
     public SellerProfileToCategory(
         final SellerProfile sellerProfile,
         final Category category,
@@ -54,16 +51,15 @@ public class SellerProfileToCategory implements Serializable, Copyable<SellerPro
         this.isTopseller = isTopseller;
     }
 
+    public SellerProfileToCategory() {
+    }
+
     @Override
     public void copyFrom(final SellerProfileToCategory entityToCopyFrom) {
         this.sellerProfile = entityToCopyFrom.getSellerProfile();
         this.category = entityToCopyFrom.getCategory();
         this.commentCount = entityToCopyFrom.getCommentCount();
         this.isTopseller = entityToCopyFrom.getIsTopseller();
-    }
-
-    public long getId() {
-        return this.id;
     }
 
     public SellerProfile getSellerProfile() {
@@ -90,6 +86,14 @@ public class SellerProfileToCategory implements Serializable, Copyable<SellerPro
         this.commentCount = commentCount;
     }
 
+    public Boolean getIsTopseller() {
+        return this.isTopseller;
+    }
+
+    public long getId() {
+        return this.id;
+    }
+
     public Boolean isTopseller() {
         return this.getIsTopseller();
     }
@@ -98,12 +102,17 @@ public class SellerProfileToCategory implements Serializable, Copyable<SellerPro
         return this.getIsTopseller();
     }
 
-    public Boolean getIsTopseller() {
-        return this.isTopseller;
-    }
-
     public void setTopseller(final Boolean topseller) {
         this.isTopseller = topseller;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = this.sellerProfile.hashCode();
+        result = 31 * result + this.category.hashCode();
+        result = 31 * result + this.commentCount.hashCode();
+        result = 31 * result + this.isTopseller.hashCode();
+        return result;
     }
 
     @Override
@@ -127,15 +136,6 @@ public class SellerProfileToCategory implements Serializable, Copyable<SellerPro
             return false;
         }
         return this.isTopseller.equals(that.isTopseller);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = this.sellerProfile.hashCode();
-        result = 31 * result + this.category.hashCode();
-        result = 31 * result + this.commentCount.hashCode();
-        result = 31 * result + this.isTopseller.hashCode();
-        return result;
     }
 
     @Override

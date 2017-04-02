@@ -17,6 +17,10 @@ public enum Method {
 
     private final int id;
 
+    private Method(final int id) {
+        this.id = id;
+    }
+
     public static Method getById(int id) {
         Method.values();
         for (Method method : Method.values()) {
@@ -25,10 +29,6 @@ public enum Method {
             }
         }
         return null;
-    }
-
-    private Method(final int id) {
-        this.id = id;
     }
 
     public int getId() {

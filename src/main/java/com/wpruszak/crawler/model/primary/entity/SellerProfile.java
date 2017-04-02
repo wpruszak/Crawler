@@ -69,10 +69,6 @@ public class SellerProfile implements Serializable, Copyable<SellerProfile> {
     @OneToMany(mappedBy = "sellerProfile")
     private Set<SellerProfileToCategory> sellerProfileToCategories;
 
-    public SellerProfile() {
-        this.sellerProfileToCategories = new HashSet<>();
-    }
-
     public SellerProfile(
         final String name,
         final String description,
@@ -102,6 +98,10 @@ public class SellerProfile implements Serializable, Copyable<SellerProfile> {
         this.sellerProfileToCategories = sellerProfileToCategories;
     }
 
+    public SellerProfile() {
+        this.sellerProfileToCategories = new HashSet<>();
+    }
+
     @Override
     public void copyFrom(final SellerProfile entityToCopyFrom) {
         this.name = entityToCopyFrom.getName();
@@ -116,10 +116,6 @@ public class SellerProfile implements Serializable, Copyable<SellerProfile> {
         this.isTopseller = entityToCopyFrom.getTopseller();
         this.text = entityToCopyFrom.getText();
         this.sellerProfileToCategories = entityToCopyFrom.getSellerProfileToCategories();
-    }
-
-    public long getId() {
-        return this.id;
     }
 
     public String getName() {
@@ -210,6 +206,18 @@ public class SellerProfile implements Serializable, Copyable<SellerProfile> {
         this.text = text;
     }
 
+    public Set<SellerProfileToCategory> getSellerProfileToCategories() {
+        return this.sellerProfileToCategories;
+    }
+
+    public void setSellerProfileToCategories(final Set<SellerProfileToCategory> sellerProfileToCategories) {
+        this.sellerProfileToCategories = sellerProfileToCategories;
+    }
+
+    public long getId() {
+        return this.id;
+    }
+
     public void addSellerProfileToCategory(final SellerProfileToCategory sellerProfileToCategory) {
         this.sellerProfileToCategories.add(sellerProfileToCategory);
     }
@@ -218,12 +226,9 @@ public class SellerProfile implements Serializable, Copyable<SellerProfile> {
         this.sellerProfileToCategories.remove(sellerProfileToCategory);
     }
 
-    public Set<SellerProfileToCategory> getSellerProfileToCategories() {
-        return this.sellerProfileToCategories;
-    }
-
-    public void setSellerProfileToCategories(final Set<SellerProfileToCategory> sellerProfileToCategories) {
-        this.sellerProfileToCategories = sellerProfileToCategories;
+    @Override
+    public int hashCode() {
+        return this.merchantId.hashCode();
     }
 
     @Override
@@ -238,11 +243,6 @@ public class SellerProfile implements Serializable, Copyable<SellerProfile> {
         final SellerProfile that = (SellerProfile) o;
 
         return this.merchantId.equals(that.merchantId);
-    }
-
-    @Override
-    public int hashCode() {
-        return this.merchantId.hashCode();
     }
 
     @Override
